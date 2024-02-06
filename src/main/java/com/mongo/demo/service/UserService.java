@@ -12,8 +12,8 @@ public interface UserService {
 
     public Page<UserDto> getAllUsers(Pageable pageable);
 
-    public UserDto updateUser(UserUpdateDto userUpdateDto);
+    public UserDto updateUser(String username, UserUpdateDto userUpdateDto);
 
-    public Boolean deleteUser(String id);
+    public Boolean deleteUser(String username);
 
 }

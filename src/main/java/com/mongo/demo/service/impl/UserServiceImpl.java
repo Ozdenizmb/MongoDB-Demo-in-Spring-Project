@@ -4,6 +4,8 @@ import com.mongo.demo.dto.UserCreateDto;
 import com.mongo.demo.dto.UserDto;
 import com.mongo.demo.dto.UserStatus;
 import com.mongo.demo.dto.UserUpdateDto;
+import com.mongo.demo.exception.ErrorMessages;
+import com.mongo.demo.exception.UserException;
 import com.mongo.demo.mapper.UserMapper;
 import com.mongo.demo.model.User;
 import com.mongo.demo.reporsitory.UserRepository;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -38,12 +41,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserUpdateDto userUpdateDto) {
-        return null;
+    public UserDto updateUser(String username, UserUpdateDto userUpdateDto) {
+        User existUser = userRepository.findByUsername(username);
+
+        if(existUser == null) {
+            throw UserException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.USER_NOT_FOUND);
+        }
+
+        BeanUtils.copyProperties(userUpdateDto, existUser);
+        User responseUser = userRepository.save(existUser);
+
+        return userMapper.toDto(responseUser);
     }
 
     @Override
-    public Boolean deleteUser(String id) {
-        return null;
+    public Boolean deleteUser(String username) {
+        User existUser = userRepository.findByUsername(username);
+
+        if(existUser == null) {
+            throw UserException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.USER_NOT_FOUND);
+        }
+        else {
+            userRepository.deleteByUsername(username);
+            return true;
+        }
     }
 }

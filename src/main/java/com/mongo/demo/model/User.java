@@ -3,6 +3,7 @@ package com.mongo.demo.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -15,6 +16,7 @@ public class User {
     private String id;
 
     @Field("user_username")
+    @Indexed(unique = true)
     private String username;
     @Field("user_first_name")
     private String firstName;
