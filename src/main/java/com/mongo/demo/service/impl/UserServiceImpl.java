@@ -9,6 +9,7 @@ import com.mongo.demo.exception.UserException;
 import com.mongo.demo.mapper.UserMapper;
 import com.mongo.demo.model.User;
 import com.mongo.demo.reporsitory.UserRepository;
+import com.mongo.demo.service.AggregationService;
 import com.mongo.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AggregationService aggregationService;
 
     @Override
     public String createUser(UserCreateDto userCreateDto) {
@@ -66,4 +68,10 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
+
+    @Override
+    public Long getRegisteredUserCount() {
+        return aggregationService.getRegisteredUserCount();
+    }
+
 }

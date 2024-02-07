@@ -8,12 +8,14 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    public String createUser(UserCreateDto userCreateDto);
+    String createUser(UserCreateDto userCreateDto);
 
-    public Page<UserDto> getAllUsers(Pageable pageable);
+    Page<UserDto> getAllUsers(Pageable pageable);
 
-    public UserDto updateUser(String username, UserUpdateDto userUpdateDto);
+    UserDto updateUser(String username, UserUpdateDto userUpdateDto);
 
-    public Boolean deleteUser(String username);
+    Boolean deleteUser(String username);
+
+    Long getRegisteredUserCount();
 
 }

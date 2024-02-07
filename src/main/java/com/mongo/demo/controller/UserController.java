@@ -38,4 +38,9 @@ public class UserController implements UserApi {
     public ResponseEntity<Boolean> deleteUser(String username) {
         return ResponseEntity.ok(userService.deleteUser(username));
     }
+
+    @Override
+    public ResponseEntity<Long> getRegisteredUserCount() {
+        return ResponseEntity.ok(userService.getRegisteredUserCount());
+    }
 }
