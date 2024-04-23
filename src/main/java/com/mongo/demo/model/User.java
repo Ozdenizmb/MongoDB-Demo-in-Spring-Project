@@ -3,12 +3,14 @@ package com.mongo.demo.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @NoArgsConstructor
 @Data
+@CompoundIndex(name = "user_idx", def = "{'user_status': 1, 'user_username': 1}", unique = true)
 @Document(collection = "user")
 public class User {
 
@@ -16,7 +18,6 @@ public class User {
     private String id;
 
     @Field("user_username")
-    @Indexed(unique = true)
     private String username;
     @Field("user_first_name")
     private String firstName;
